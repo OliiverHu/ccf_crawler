@@ -122,11 +122,11 @@ class Ui_MainWindow(object):
 def on_click():
     print("test")
 
+
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
-    print("1")
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
     MainWindow.show()
