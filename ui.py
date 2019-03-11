@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from PyQt5 import QtCore, QtWidgets
+from PyQt5 import QtCore, QtGui, QtWidgets
 # from ccf_name_crawler import update_info
 
 
@@ -140,6 +140,7 @@ class UIMainWindow(object):
     def translate_ui(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "CCF Crawler"))
+        MainWindow.setWindowIcon(QtGui.QIcon("home.jpg"))
         self.pushButton.setText(_translate("MainWindow", "Crawl"))
         self.checkBox_3.setText(_translate("MainWindow", "name of conference or transaction1"))
         self.checkBox_8.setText(_translate("MainWindow", "name of conference or transaction2"))
