@@ -11,7 +11,7 @@ from ccf_name_crawler import update_info
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
-        MainWindow.setObjectName("MainWindow")
+        MainWindow.setObjectName("CCF Crawler")
         MainWindow.resize(680, 716)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(1)
@@ -34,6 +34,7 @@ class Ui_MainWindow(object):
         self.gridLayout.addLayout(self.horizontalLayout, 2, 0, 1, 1)
         self.toolBox = QtWidgets.QToolBox(self.centralwidget)
         self.toolBox.setObjectName("toolBox")
+        # page 1 of toolBox
         self.page = QtWidgets.QWidget()
         self.page.setGeometry(QtCore.QRect(0, 0, 658, 546))
         self.page.setObjectName("page")
@@ -52,6 +53,7 @@ class Ui_MainWindow(object):
         self.checkBox_2.setObjectName("checkBox_2")
         self.gridLayout_2.addWidget(self.checkBox_2, 3, 0, 1, 1)
         self.toolBox.addItem(self.page, "")
+        # page 2 of toolBox
         self.page_2 = QtWidgets.QWidget()
         self.page_2.setGeometry(QtCore.QRect(0, 0, 658, 546))
         self.page_2.setObjectName("page_2")
@@ -116,7 +118,7 @@ class Ui_MainWindow(object):
         self.actionExport.setText(_translate("MainWindow", "Export"))
         self.actionExit.setText(_translate("MainWindow", "Exit"))
         self.actionUpdate.setText(_translate("MainWindow", "Update"))
-        self.actionUpdate.triggered.connect(update_info)
+        self.actionUpdate.triggered.connect(on_click)
         self.actionFilter.setText(_translate("MainWindow", "Filter"))
 
 
