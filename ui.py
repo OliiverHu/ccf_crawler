@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from PyQt5 import QtCore, QtGui, QtWidgets
-# from ccf_name_crawler import update_info
+from ccf_name_crawler import update_info
 
 
 # noinspection PyArgumentList
@@ -54,7 +54,7 @@ class UIMainWindow(object):
 
         self.pushButton = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton.setObjectName("pushButton")
-        self.pushButton.clicked.connect(on_click)
+        # self.pushButton.clicked.connect()
 
         self.toolBox = QtWidgets.QToolBox(self.centralwidget)
         self.toolBox.setObjectName("toolBox")
@@ -123,7 +123,6 @@ class UIMainWindow(object):
         # self.statusbar.setObjectName("statusbar")
         # MainWindow.setStatusBar(self.statusbar)
 
-
         # set the functionality of Exit menu item
         self.actionExit.setShortcut('Ctrl+Q')
         self.actionExit.setStatusTip('Exit application')
@@ -131,7 +130,7 @@ class UIMainWindow(object):
 
         # set the functionality of Update menu item
         self.actionUpdate.setShortcut('Ctrl+U')
-        self.actionUpdate.triggered.connect(on_click)
+        self.actionUpdate.triggered.connect(update_info)
 
         # binding sub menu to menuFile
         self.menuFile.addAction(self.actionImport)
@@ -170,8 +169,8 @@ class UIMainWindow(object):
         self.actionFilter.setText(_translate("MainWindow", "Filter"))
 
 
-def on_click():
-    print("test")
+# def on_click():
+#     print("test")
 
 
 if __name__ == "__main__":
