@@ -9,9 +9,11 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from ccf_name_crawler import update_info
 
-class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
-        MainWindow.setObjectName("CCF Crawler")
+
+class UIMainWindow(object):
+
+    def setup_ui(self, MainWindow):
+        MainWindow.setObjectName("MainWindow")
         MainWindow.resize(680, 716)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(1)
@@ -68,32 +70,44 @@ class Ui_MainWindow(object):
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 680, 26))
         self.menubar.setObjectName("menubar")
-        self.menutab1 = QtWidgets.QMenu(self.menubar)
-        self.menutab1.setObjectName("menutab1")
-        self.menu = QtWidgets.QMenu(self.menubar)
-        self.menu.setObjectName("menu")
+        self.menuFile = QtWidgets.QMenu(self.menubar)
+        self.menuFile.setObjectName("menuFile")
+        self.menuUpdate = QtWidgets.QMenu(self.menubar)
+        self.menuUpdate.setObjectName("menuUpdate")
         self.menuFilter = QtWidgets.QMenu(self.menubar)
         self.menuFilter.setObjectName("menuFilter")
         MainWindow.setMenuBar(self.menubar)
-        self.statusbar = QtWidgets.QStatusBar(MainWindow)
-        self.statusbar.setObjectName("statusbar")
-        MainWindow.setStatusBar(self.statusbar)
-        self.actiontest = QtWidgets.QAction(MainWindow)
-        self.actiontest.setObjectName("actiontest")
+        # self.statusbar = QtWidgets.QStatusBar(MainWindow)
+        # self.statusbar.setObjectName("statusbar")
+        # MainWindow.setStatusBar(self.statusbar)
+        self.actionImport = QtWidgets.QAction(MainWindow)
+        self.actionImport.setObjectName("actionImport")
         self.actionExport = QtWidgets.QAction(MainWindow)
         self.actionExport.setObjectName("actionExport")
+
+        # set the functionality of Exit menu item
         self.actionExit = QtWidgets.QAction(MainWindow)
         self.actionExit.setObjectName("actionExit")
+        self.actionExit.setShortcut('Ctrl+Q')
+        self.actionExit.setStatusTip('Exit application')
+        self.actionExit.triggered.connect(MainWindow.close)
+
+        # set the functionality of Update menu item
         self.actionUpdate = QtWidgets.QAction(MainWindow)
         self.actionUpdate.setObjectName("actionUpdate")
+        self.actionUpdate.setShortcut('Ctrl+U')
+        # self.actionUpdate.triggered.connect(on_click)
+
         self.actionFilter = QtWidgets.QAction(MainWindow)
         self.actionFilter.setObjectName("actionFilter")
-        self.menutab1.addAction(self.actiontest)
-        self.menutab1.addAction(self.actionExport)
-        self.menutab1.addSeparator()
-        self.menutab1.addAction(self.actionExit)
-        self.menubar.addAction(self.menutab1.menuAction())
-        self.menubar.addAction(self.menu.menuAction())
+
+        self.menuFile.addAction(self.actionImport)
+        self.menuFile.addAction(self.actionExport)
+        self.menuFile.addSeparator()
+        self.menuFile.addAction(self.actionExit)
+
+        self.menubar.addAction(self.menuFile.menuAction())
+        self.menubar.addAction(self.menuUpdate.menuAction())
         self.menubar.addAction(self.menuFilter.menuAction())
 
         self.retranslateUi(MainWindow)
@@ -102,23 +116,22 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "CCF spider"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "CCF Crawler"))
         self.pushButton.setText(_translate("MainWindow", "Crawl"))
-        self.checkBox_3.setText(_translate("MainWindow", "CheckBox"))
-        self.checkBox_8.setText(_translate("MainWindow", "CheckBox"))
-        self.checkBox_9.setText(_translate("MainWindow", "CheckBox"))
-        self.checkBox_2.setText(_translate("MainWindow", "CheckBox"))
-        self.toolBox.setItemText(self.toolBox.indexOf(self.page), _translate("MainWindow", "Page 1"))
+        self.checkBox_3.setText(_translate("MainWindow", "name of conference or transaction1"))
+        self.checkBox_8.setText(_translate("MainWindow", "name of conference or transaction2"))
+        self.checkBox_9.setText(_translate("MainWindow", "name of conference or transaction3"))
+        self.checkBox_2.setText(_translate("MainWindow", "name of conference or transaction4"))
+        self.toolBox.setItemText(self.toolBox.indexOf(self.page), _translate("MainWindow", "name of category1"))
         self.checkBox_4.setText(_translate("MainWindow", "CheckBox"))
-        self.toolBox.setItemText(self.toolBox.indexOf(self.page_2), _translate("MainWindow", "Page 2"))
-        self.menutab1.setTitle(_translate("MainWindow", "File"))
-        self.menu.setTitle(_translate("MainWindow", "Update"))
+        self.toolBox.setItemText(self.toolBox.indexOf(self.page_2), _translate("MainWindow", "name of category2"))
+        self.menuFile.setTitle(_translate("MainWindow", "File"))
+        self.menuUpdate.setTitle(_translate("MainWindow", "Update"))
         self.menuFilter.setTitle(_translate("MainWindow", "Filter"))
-        self.actiontest.setText(_translate("MainWindow", "Import"))
+        self.actionImport.setText(_translate("MainWindow", "Import"))
         self.actionExport.setText(_translate("MainWindow", "Export"))
         self.actionExit.setText(_translate("MainWindow", "Exit"))
         self.actionUpdate.setText(_translate("MainWindow", "Update"))
-        self.actionUpdate.triggered.connect(on_click)
         self.actionFilter.setText(_translate("MainWindow", "Filter"))
 
 
@@ -130,8 +143,8 @@ if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
+    ui = UIMainWindow()
+    ui.setup_ui(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())
 
