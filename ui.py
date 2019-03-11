@@ -11,6 +11,7 @@ class UIMainWindow(object):
 
         # main window size policy
         MainWindow.setObjectName("MainWindow")
+        MainWindow.setWindowIcon(QtGui.QIcon('home.png'))
         MainWindow.resize(680, 716)
         size_policy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         size_policy.setHorizontalStretch(1)
@@ -20,14 +21,24 @@ class UIMainWindow(object):
 
         # menu bar related items init
         self.menubar = QtWidgets.QMenuBar(MainWindow)
+        self.menubar.setObjectName("menubar")
         self.menuFile = QtWidgets.QMenu(self.menubar)
+        self.menuFile.setObjectName("menuFile")
         self.menuUpdate = QtWidgets.QMenu(self.menubar)
+        self.menuUpdate.setObjectName("menuUpdate")
+
         self.menuFilter = QtWidgets.QMenu(self.menubar)
+        self.menuFilter.setObjectName("menuFilter")
 
         self.actionImport = QtWidgets.QAction(MainWindow)
+        self.actionImport.setObjectName("actionImport")
         self.actionExport = QtWidgets.QAction(MainWindow)
+        self.actionExport.setObjectName("actionExport")
         self.actionExit = QtWidgets.QAction(MainWindow)
+        self.actionExit.setObjectName("actionExit")
+
         self.actionUpdate = QtWidgets.QAction(MainWindow)
+        self.actionUpdate.setObjectName("actionUpdate")
         self.actionFilter = QtWidgets.QAction(MainWindow)
         self.actionFilter.setObjectName("actionFilter")
 
@@ -106,32 +117,33 @@ class UIMainWindow(object):
     def setup_menu(self, MainWindow):
         # menubar of the mainwindow
         self.menubar.setGeometry(QtCore.QRect(0, 0, 680, 26))
-        self.menubar.setObjectName("menubar")
-        self.menuFile.setObjectName("menuFile")
-        self.menuUpdate.setObjectName("menuUpdate")
-        self.menuFilter.setObjectName("menuFilter")
+
         MainWindow.setMenuBar(self.menubar)
         # self.statusbar = QtWidgets.QStatusBar(MainWindow) what is status bar?
         # self.statusbar.setObjectName("statusbar")
         # MainWindow.setStatusBar(self.statusbar)
-        self.actionImport.setObjectName("actionImport")
-        self.actionExport.setObjectName("actionExport")
+
 
         # set the functionality of Exit menu item
-        self.actionExit.setObjectName("actionExit")
         self.actionExit.setShortcut('Ctrl+Q')
         self.actionExit.setStatusTip('Exit application')
         self.actionExit.triggered.connect(MainWindow.close)
 
         # set the functionality of Update menu item
-        self.actionUpdate.setObjectName("actionUpdate")
         self.actionUpdate.setShortcut('Ctrl+U')
-        # self.actionUpdate.triggered.connect(on_click)
+        self.actionUpdate.triggered.connect(on_click)
 
+        # binding sub menu to menuFile
         self.menuFile.addAction(self.actionImport)
         self.menuFile.addAction(self.actionExport)
         self.menuFile.addSeparator()
         self.menuFile.addAction(self.actionExit)
+
+        # binding sub menu to menuUpdate
+        self.menuUpdate.addAction(self.actionUpdate)
+
+        # binding sub menu to menuFilter
+        self.menuFilter.addAction(self.actionFilter)
 
         self.menubar.addAction(self.menuFile.menuAction())
         self.menubar.addAction(self.menuUpdate.menuAction())
@@ -169,6 +181,5 @@ if __name__ == "__main__":
     MainWindow = QtWidgets.QMainWindow()
     ui = UIMainWindow()
     ui.__init__()
-    MainWindow.setWindowIcon(QtGui.QIcon('C:/Users/OliverHu/Desktop/ccf_crawler/ccf_crawler/home.png'))
     MainWindow.show()
     sys.exit(app.exec_())
