@@ -140,7 +140,6 @@ class UIMainWindow(object):
     def translate_ui(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "CCF Crawler"))
-        MainWindow.setWindowIcon(QtGui.QIcon("home.jpg"))
         self.pushButton.setText(_translate("MainWindow", "Crawl"))
         self.checkBox_3.setText(_translate("MainWindow", "name of conference or transaction1"))
         self.checkBox_8.setText(_translate("MainWindow", "name of conference or transaction2"))
@@ -170,5 +169,6 @@ if __name__ == "__main__":
     MainWindow = QtWidgets.QMainWindow()
     ui = UIMainWindow()
     ui.__init__()
+    MainWindow.setWindowIcon(QtGui.QIcon('C:/Users/OliverHu/Desktop/ccf_crawler/ccf_crawler/home.png'))
     MainWindow.show()
     sys.exit(app.exec_())
