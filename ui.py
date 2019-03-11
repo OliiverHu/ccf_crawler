@@ -7,6 +7,7 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from ccf_name_crawler import update_info
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -115,7 +116,7 @@ class Ui_MainWindow(object):
         self.actionExport.setText(_translate("MainWindow", "Export"))
         self.actionExit.setText(_translate("MainWindow", "Exit"))
         self.actionUpdate.setText(_translate("MainWindow", "Update"))
-        self.actionUpdate.triggered.connect(on_click)
+        self.actionUpdate.triggered.connect(update_info)
         self.actionFilter.setText(_translate("MainWindow", "Filter"))
 
 
