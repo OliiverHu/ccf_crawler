@@ -198,6 +198,7 @@ class UIMainWindow(object):
             row_count.pop()
         # print(len(row_count))
         flag = 0
+        checkbox_list = []
         for i in range(1, len(row_count)+1):
             # print(ccf_table.cell_value(i, 3*start_pos+1))
             if ccf_table.cell_value(i-1, 3*start_pos+1) == '':
@@ -249,9 +250,11 @@ class UIMainWindow(object):
                     gridLayout2.addWidget(checkbox, i, 0, 1, 1)
             else:
                 checkbox = QtWidgets.QCheckBox(ccf_table.cell_value(i-1, 3*start_pos+1), tab)
-                checkbox.setObjectName("checkBox")
+                checkbox.setObjectName("checkBox" + str(i-1))
                 checkbox.setStyleSheet("font: 10pt")
+                checkbox_list.append(checkbox)
                 gridLayout2.addWidget(checkbox, i, 0, 1, 1)
+        # print(checkbox_list)
 
     def translate_ui(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
