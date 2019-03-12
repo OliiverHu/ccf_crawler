@@ -106,7 +106,7 @@ def update_info():
         line_count = 0
         for j in range(8):
             if j == 0:
-                table.write(line_count, 3 * i - 3, (content_name[i] + "刊物"))
+                table.write(line_count, 3 * i - 3, (content_name[i]))
                 line_count += 1  # = 1
             if j == 1:
                 table.write(line_count, 3 * i - 3, "A")
@@ -133,7 +133,7 @@ def update_info():
                     table.write(line_count, 3 * i - 1, hrefname_c_transac[k])
                     line_count += 1
             if j == 4:
-                table.write(line_count, 3 * i - 3, (content_name[i] + "会议"))
+                table.write(line_count, 3 * i - 3, (content_name[i]))
                 line_count += 1
             if j == 5:
                 table.write(line_count, 3 * i - 3, "A")

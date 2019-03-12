@@ -165,6 +165,7 @@ class UIMainWindow(object):
 
     def setup_toolbox_tab(self):
         length = self.length
+        # length = 1
         ccf_table = self.xl_file.sheet_by_index(0)
         # ft = tkinter.font.Font(family='Fixdsys', size=14, weight=tkinter.font.BOLD)
         # label = Label(canvas, text=ccf_table.cell_value(0, 3 * start_pos), anchor=NW, font=ft)
@@ -181,22 +182,69 @@ class UIMainWindow(object):
             self.toolBox.addItem(page, ccf_table.cell_value(0, 3 * i))
 
     def setup_checkbox(self, col_index, tab):
-        #  problems here
         ccf_table = self.xl_file.sheet_by_index(0)
         start_pos = col_index
         gridLayout2 = QtWidgets.QGridLayout(tab)
-        # ft = tkinter.font.Font(family='Fixdsys', size=14, weight=tkinter.font.BOLD)
-        # label = Label(canvas, text=ccf_table.cell_value(0, 3 * start_pos), anchor=NW, font=ft)
-        # label.pack(side=TOP, padx=5, pady=5)
+
+        title = ccf_table.cell_value(0, 3 * start_pos)
+        label = QtWidgets.QLabel()
+        label.setText(title)
+        label.setAlignment(QtCore.Qt.AlignCenter)
+        label.setFont(QtGui.QFont("Roman times", 15, QtGui.QFont.Bold))
+        gridLayout2.addWidget(label, 0, 0, 1, 1)
+
         row_count = ccf_table.col_values(3 * start_pos + 1)
         while row_count[-1] == '':
             row_count.pop()
         # print(len(row_count))
-        for i in range(len(row_count)):
+        flag = 0
+        for i in range(1, len(row_count)+1):
             # print(ccf_table.cell_value(i, 3*start_pos+1))
-            checkbox = QtWidgets.QCheckBox(ccf_table.cell_value(i, 3*start_pos+1), tab)
-            checkbox.setObjectName("checkBox")
-            gridLayout2.addWidget(checkbox, i, 0, 1, 1)
+            if ccf_table.cell_value(i-1, 3*start_pos+1) == '':
+                flag += 1
+                if flag == 1:
+                    label = QtWidgets.QLabel()
+                    label.setText("期刊")
+                    label.setAlignment(QtCore.Qt.AlignCenter)
+                    label.setFont(QtGui.QFont("Roman times", 10, QtGui.QFont.Bold))
+                    gridLayout2.addWidget(label, i, 0, 1, 1)
+                elif flag == 2:
+                    checkbox = QtWidgets.QCheckBox("A类", tab)
+                    checkbox.setObjectName("A")
+
+                    '''change only one certain widget in the app'''
+                    checkbox.setStyleSheet("font: 30pt")
+                    gridLayout2.addWidget(checkbox, i, 0, 1, 1)
+                elif flag == 3:
+                    checkbox = QtWidgets.QCheckBox("B类", tab)
+                    checkbox.setObjectName("B")
+                    gridLayout2.addWidget(checkbox, i, 0, 1, 1)
+                elif flag == 4:
+                    checkbox = QtWidgets.QCheckBox("C类", tab)
+                    checkbox.setObjectName("C")
+                    gridLayout2.addWidget(checkbox, i, 0, 1, 1)
+                elif flag == 5:
+                    label = QtWidgets.QLabel()
+                    label.setText("会议")
+                    label.setAlignment(QtCore.Qt.AlignCenter)
+                    label.setFont(QtGui.QFont("Roman times", 10, QtGui.QFont.Bold))
+                    gridLayout2.addWidget(label, i, 0, 1, 1)
+                elif flag == 6:
+                    checkbox = QtWidgets.QCheckBox("A类", tab)
+                    checkbox.setObjectName("A")
+                    gridLayout2.addWidget(checkbox, i, 0, 1, 1)
+                elif flag == 7:
+                    checkbox = QtWidgets.QCheckBox("B类", tab)
+                    checkbox.setObjectName("B")
+                    gridLayout2.addWidget(checkbox, i, 0, 1, 1)
+                else:
+                    checkbox = QtWidgets.QCheckBox("C类", tab)
+                    checkbox.setObjectName("C")
+                    gridLayout2.addWidget(checkbox, i, 0, 1, 1)
+            else:
+                checkbox = QtWidgets.QCheckBox(ccf_table.cell_value(i-1, 3*start_pos+1), tab)
+                checkbox.setObjectName("checkBox")
+                gridLayout2.addWidget(checkbox, i, 0, 1, 1)
 
     def translate_ui(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -219,9 +267,27 @@ class UIMainWindow(object):
         self.actionFilter.setText(_translate("MainWindow", "Filter"))
 
 
+'''to change the font of all same kind of widgets in the app GLOBAL'''
+# StyleSheet = '''
+# QCheckBox {
+#     spacing: 3px;
+#     font-size:20px;     /* <--- */
+# }
+#
+# QCheckBox::indicator {
+#     width:  33px;
+#     height: 33px;
+# }
+# '''
+
+
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
+
+    '''to change the font of all same kind of widgets in the app GLOBAL'''
+    # app.setStyleSheet(StyleSheet)
+
     # noinspection PyArgumentList
     MainWindow = QtWidgets.QMainWindow()
     ui = UIMainWindow()
