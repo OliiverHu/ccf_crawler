@@ -168,8 +168,8 @@ class UIMainWindow(object):
         for i in range(int(length)):
             page = QtWidgets.QWidget()
             page.setObjectName("page")
-            gridLayout = QtWidgets.QGridLayout(page)
-            gridLayout.setObjectName("gridLayout")
+            # gridLayout = QtWidgets.QGridLayout()
+            # gridLayout.setObjectName("gridLayout")
 
             self.setup_checkbox(i, page)
             page.setGeometry(QtCore.QRect(0, 0, 658, 546))
