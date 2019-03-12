@@ -165,6 +165,11 @@ class UIMainWindow(object):
 
     def setup_toolbox_tab(self):
         length = self.length
+        ccf_table = self.xl_file.sheet_by_index(0)
+        # ft = tkinter.font.Font(family='Fixdsys', size=14, weight=tkinter.font.BOLD)
+        # label = Label(canvas, text=ccf_table.cell_value(0, 3 * start_pos), anchor=NW, font=ft)
+        # label.pack(side=TOP, padx=5, pady=5)
+
         for i in range(int(length)):
             page = QtWidgets.QWidget()
             page.setObjectName("page")
@@ -173,7 +178,7 @@ class UIMainWindow(object):
 
             self.setup_checkbox(i, page)
             page.setGeometry(QtCore.QRect(0, 0, 658, 546))
-            self.toolBox.addItem(page, "Tab " + str(i))
+            self.toolBox.addItem(page, ccf_table.cell_value(0, 3 * i))
 
     def setup_checkbox(self, col_index, tab):
         #  problems here
@@ -212,10 +217,6 @@ class UIMainWindow(object):
         self.actionExit.setText(_translate("MainWindow", "Exit"))
         self.actionUpdate.setText(_translate("MainWindow", "Update"))
         self.actionFilter.setText(_translate("MainWindow", "Filter"))
-
-
-# def on_click():
-#     print("test")
 
 
 if __name__ == "__main__":
