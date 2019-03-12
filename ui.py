@@ -176,36 +176,22 @@ class UIMainWindow(object):
             self.toolBox.addItem(page, "Tab " + str(i))
 
     def setup_checkbox(self, col_index, tab):
-        # xl_file = xlrd.open_workbook('ccf_names&links.xls')
+        #  problems here
         ccf_table = self.xl_file.sheet_by_index(0)
         start_pos = col_index
-
-        # canvas = Canvas(tab, bg='#FFFFFF', width=300, height=300, scrollregion=(0, 0, 1000, 3000))
-        #
-        # hbar = Scrollbar(tab, orient=HORIZONTAL)
-        # hbar.pack(side=BOTTOM, fill=X)
-        # hbar.config(command=canvas.xview)
-        #
-        # vbar = Scrollbar(tab, orient=VERTICAL)
-        # vbar.pack(side=RIGHT, fill=Y)
-        # vbar.config(command=canvas.yview)
-        #
-        # canvas.config(width=300, height=300)
-        # canvas.config(xscrollcommand=hbar.set, yscrollcommand=vbar.set)
-        # canvas.pack(side=LEFT, expand=True, fill=BOTH)
-        # # canvas.config(xscrollcommand=hsbar.set)
-        # # , yscrollcommand=vsbar.set, xscrollcommand=hsbar.set
-        #
+        gridLayout2 = QtWidgets.QGridLayout(tab)
         # ft = tkinter.font.Font(family='Fixdsys', size=14, weight=tkinter.font.BOLD)
         # label = Label(canvas, text=ccf_table.cell_value(0, 3 * start_pos), anchor=NW, font=ft)
         # label.pack(side=TOP, padx=5, pady=5)
-        # row_count = table.col_values(3 * start_pos + 1)
-        # while row_count[-1] == '':
-        #     row_count.pop()
-        # # print(len(row_count))
-        # for i in range(len(row_count)):
-        #     checkbox = Checkbutton(canvas, text=table.cell_value(i, 3 * start_pos + 1), onvalue=1, offvalue=0)
-        #     checkbox.pack(side=TOP, padx=5, pady=5, anchor=W)
+        row_count = ccf_table.col_values(3 * start_pos + 1)
+        while row_count[-1] == '':
+            row_count.pop()
+        # print(len(row_count))
+        for i in range(len(row_count)):
+            # print(ccf_table.cell_value(i, 3*start_pos+1))
+            checkbox = QtWidgets.QCheckBox(ccf_table.cell_value(i, 3*start_pos+1), tab)
+            checkbox.setObjectName("checkBox")
+            gridLayout2.addWidget(checkbox, i, 0, 1, 1)
 
     def translate_ui(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -213,7 +199,7 @@ class UIMainWindow(object):
         self.pushButton.setText(_translate("MainWindow", "Crawl"))
         # self.checkBox_3.setText(_translate("MainWindow", "name of conference or transaction1"))
         # self.checkBox_8.setText(_translate("MainWindow", "name of conference or transaction2"))
-        # self.checkBox_9.setText(_translate("MainWindow", "name of conference or transaction3"))
+        # self.checkBox_9.setText(QtCore.QCoreApplication.translate("MainWindow", "name of conference or transaction3"))
         # self.checkBox_2.setText(_translate("MainWindow", "name of conference or transaction4"))
         # self.toolBox.setItemText(self.toolBox.indexOf(self.page), _translate("MainWindow", "name of category1"))
         # self.checkBox_4.setText(_translate("MainWindow", "CheckBox"))
