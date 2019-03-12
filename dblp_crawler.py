@@ -1,11 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
 
-
-def check_checkbox():
-    pass
-
-
 def crawl_volume_links_from_journal(journal_url, year):
     # return link lists of journal in 'journal_url' in recent 'year' years
     soup = BeautifulSoup(requests.get(url=journal_url).text, 'html.parser')

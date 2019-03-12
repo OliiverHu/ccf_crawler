@@ -7,11 +7,13 @@ import xlrd
 # noinspection PyArgumentList
 class UIMainWindow(object):
 
-    def __init__(self):
+    def __init__(self, MainWindow):
         super().__init__()
         # length of the excel file
         self.length = 10
         self.xl_file = xlrd.open_workbook('ccf_names&links.xls')
+        self.checkbox_list = []
+        self.checkbox_link_list = []
 
         # main window size policy
         MainWindow.setObjectName("MainWindow")
@@ -198,7 +200,7 @@ class UIMainWindow(object):
             row_count.pop()
         # print(len(row_count))
         flag = 0
-        checkbox_list = []
+        # checkbox_list = []
         for i in range(1, len(row_count)+1):
             # print(ccf_table.cell_value(i, 3*start_pos+1))
             if ccf_table.cell_value(i-1, 3*start_pos+1) == '':
@@ -252,9 +254,10 @@ class UIMainWindow(object):
                 checkbox = QtWidgets.QCheckBox(ccf_table.cell_value(i-1, 3*start_pos+1), tab)
                 checkbox.setObjectName("checkBox" + str(i-1))
                 checkbox.setStyleSheet("font: 10pt")
-                checkbox_list.append(checkbox)
+                self.checkbox_list.append(checkbox)
+                self.checkbox_link_list.append(ccf_table.cell_value(i-1, 3*start_pos+2))
                 gridLayout2.addWidget(checkbox, i, 0, 1, 1)
-        # print(checkbox_list)
+        # print(self.checkbox_list)
 
     def translate_ui(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -300,7 +303,7 @@ if __name__ == "__main__":
 
     # noinspection PyArgumentList
     MainWindow = QtWidgets.QMainWindow()
-    ui = UIMainWindow()
-    ui.__init__()
+    window = UIMainWindow()
+    window.__init__()
     MainWindow.show()
     sys.exit(app.exec_())
