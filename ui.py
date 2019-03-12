@@ -13,6 +13,7 @@ class UIMainWindow(object):
         self.length = 10
         self.xl_file = xlrd.open_workbook('ccf_names&links.xls')
         self.checkbox_list = []
+        self.two_d_checkbox_list = [[None]*6 for col in range(self.length)]
         self.checkbox_link_list = []
 
         # main window size policy
@@ -120,6 +121,7 @@ class UIMainWindow(object):
         self.setup_menu(MainWindow)
         self.setup_toolbox_tab()
         self.translate_ui(MainWindow)
+        self.xlrd_reader()
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def set_length(self):
@@ -127,9 +129,65 @@ class UIMainWindow(object):
             # xl_file = xlrd.open_workbook('ccf_names&links.xls')
             table = self.xl_file.sheet_by_index(0)
             cols = table.ncols
-            self.length = cols / 3
+            self.length = int(cols / 3)
         except FileNotFoundError:
             self.length = 10
+
+    def xlrd_reader(self):
+        table = self.xl_file.sheet_by_index(0)
+        item_count = -1
+        for i in range(self.length):  # traverse tabs(cols)
+            row_count = table.col_values(3 * i + 1)
+            while row_count[-1] == '':
+                row_count.pop()
+            k = 0  # count the blank cell in xlfile in order to distinguish from name to name
+            at_list = []
+            bt_list = []
+            ct_list = []
+            ac_list = []
+            bc_list = []
+            cc_list = []
+            for j in range(len(row_count)):  # traverse rows
+                if table.cell_value(j, 3 * i + 1) == '':
+                    k += 1
+                else:
+                    item_count += 1
+                if k == 1 or k == 5:
+                    pass
+                elif k == 2:
+                    if table.cell_value(j, 3 * i) != 'A' and 'B' and 'C':
+                        at_list.append([self.checkbox_list[item_count], table.cell_value(j, 3 * i),
+                                        table.cell_value(j, 3 * i + 1), table.cell_value(j, 3 * i + 2)])
+                elif k == 3:
+                    if table.cell_value(j, 3 * i) != 'A' and 'B' and 'C':
+                        bt_list.append([self.checkbox_list[item_count], table.cell_value(j, 3 * i),
+                                        table.cell_value(j, 3 * i + 1), table.cell_value(j, 3 * i + 2)])
+                elif k == 4:
+                    if table.cell_value(j, 3 * i) != 'A' and 'B' and 'C':
+                        ct_list.append([self.checkbox_list[item_count], table.cell_value(j, 3 * i),
+                                        table.cell_value(j, 3 * i + 1), table.cell_value(j, 3 * i + 2)])
+                elif k == 6:
+                    if table.cell_value(j, 3 * i) != 'A' and 'B' and 'C':
+                        ac_list.append([self.checkbox_list[item_count], table.cell_value(j, 3 * i),
+                                        table.cell_value(j, 3 * i + 1), table.cell_value(j, 3 * i + 2)])
+                elif k == 7:
+                    if table.cell_value(j, 3 * i) != 'A' and 'B' and 'C':
+                        bc_list.append([self.checkbox_list[item_count], table.cell_value(j, 3 * i),
+                                        table.cell_value(j, 3 * i + 1), table.cell_value(j, 3 * i + 2)])
+                elif k == 8:
+                    if table.cell_value(j, 3 * i) != 'A' and 'B' and 'C':
+                        cc_list.append([self.checkbox_list[item_count], table.cell_value(j, 3 * i),
+                                        table.cell_value(j, 3 * i + 1), table.cell_value(j, 3 * i + 2)])
+            self.two_d_checkbox_list[i][0] = at_list
+            self.two_d_checkbox_list[i][1] = bt_list
+            self.two_d_checkbox_list[i][2] = ct_list
+            self.two_d_checkbox_list[i][3] = ac_list
+            self.two_d_checkbox_list[i][4] = bc_list
+            self.two_d_checkbox_list[i][5] = cc_list
+            # print(item_count) this var is right
+        # print(self.two_d_checkbox_list)
+        # print(self.checkbox_list)
+
 
     def setup_menu(self, MainWindow):
         # menubar of the mainwindow
@@ -303,7 +361,7 @@ if __name__ == "__main__":
 
     # noinspection PyArgumentList
     MainWindow = QtWidgets.QMainWindow()
-    window = UIMainWindow()
-    window.__init__()
+    window = UIMainWindow(MainWindow)
+    window.__init__(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())
