@@ -16,7 +16,7 @@ class UIMainWindow(object):
         # main window size policy
         MainWindow.setObjectName("MainWindow")
         MainWindow.setWindowIcon(QtGui.QIcon('home.png'))
-        MainWindow.resize(680, 716)
+        MainWindow.resize(750, 900)
         size_policy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         size_policy.setHorizontalStretch(1)
         size_policy.setVerticalStretch(1)
@@ -190,7 +190,7 @@ class UIMainWindow(object):
         label = QtWidgets.QLabel()
         label.setText(title)
         label.setAlignment(QtCore.Qt.AlignCenter)
-        label.setFont(QtGui.QFont("Roman times", 15, QtGui.QFont.Bold))
+        label.setFont(QtGui.QFont("Roman times", 20, QtGui.QFont.Bold))
         gridLayout2.addWidget(label, 0, 0, 1, 1)
 
         row_count = ccf_table.col_values(3 * start_pos + 1)
@@ -206,44 +206,51 @@ class UIMainWindow(object):
                     label = QtWidgets.QLabel()
                     label.setText("期刊")
                     label.setAlignment(QtCore.Qt.AlignCenter)
-                    label.setFont(QtGui.QFont("Roman times", 10, QtGui.QFont.Bold))
+                    label.setFont(QtGui.QFont("Roman times", 15, QtGui.QFont.Bold))
                     gridLayout2.addWidget(label, i, 0, 1, 1)
                 elif flag == 2:
                     checkbox = QtWidgets.QCheckBox("A类", tab)
                     checkbox.setObjectName("A")
 
                     '''change only one certain widget in the app'''
-                    checkbox.setStyleSheet("font: 30pt")
+                    # checkbox.setStyleSheet("font: 15pt")
+                    checkbox.setFont(QtGui.QFont("Roman times", 18, QtGui.QFont.Bold))
                     gridLayout2.addWidget(checkbox, i, 0, 1, 1)
                 elif flag == 3:
                     checkbox = QtWidgets.QCheckBox("B类", tab)
                     checkbox.setObjectName("B")
+                    checkbox.setFont(QtGui.QFont("Roman times", 18, QtGui.QFont.Bold))
                     gridLayout2.addWidget(checkbox, i, 0, 1, 1)
                 elif flag == 4:
                     checkbox = QtWidgets.QCheckBox("C类", tab)
                     checkbox.setObjectName("C")
+                    checkbox.setFont(QtGui.QFont("Roman times", 18, QtGui.QFont.Bold))
                     gridLayout2.addWidget(checkbox, i, 0, 1, 1)
                 elif flag == 5:
                     label = QtWidgets.QLabel()
                     label.setText("会议")
                     label.setAlignment(QtCore.Qt.AlignCenter)
-                    label.setFont(QtGui.QFont("Roman times", 10, QtGui.QFont.Bold))
+                    label.setFont(QtGui.QFont("Roman times", 15, QtGui.QFont.Bold))
                     gridLayout2.addWidget(label, i, 0, 1, 1)
                 elif flag == 6:
                     checkbox = QtWidgets.QCheckBox("A类", tab)
                     checkbox.setObjectName("A")
+                    checkbox.setFont(QtGui.QFont("Roman times", 18, QtGui.QFont.Bold))
                     gridLayout2.addWidget(checkbox, i, 0, 1, 1)
                 elif flag == 7:
                     checkbox = QtWidgets.QCheckBox("B类", tab)
                     checkbox.setObjectName("B")
+                    checkbox.setFont(QtGui.QFont("Roman times", 18, QtGui.QFont.Bold))
                     gridLayout2.addWidget(checkbox, i, 0, 1, 1)
                 else:
                     checkbox = QtWidgets.QCheckBox("C类", tab)
                     checkbox.setObjectName("C")
+                    checkbox.setFont(QtGui.QFont("Roman times", 18, QtGui.QFont.Bold))
                     gridLayout2.addWidget(checkbox, i, 0, 1, 1)
             else:
                 checkbox = QtWidgets.QCheckBox(ccf_table.cell_value(i-1, 3*start_pos+1), tab)
                 checkbox.setObjectName("checkBox")
+                checkbox.setStyleSheet("font: 10pt")
                 gridLayout2.addWidget(checkbox, i, 0, 1, 1)
 
     def translate_ui(self, MainWindow):
