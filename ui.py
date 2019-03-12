@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from PyQt5 import QtCore, QtGui, QtWidgets
 from ccf_name_crawler import update_info
+import xlrd
 
 
 # noinspection PyArgumentList
@@ -8,6 +9,9 @@ class UIMainWindow(object):
 
     def __init__(self):
         super().__init__()
+        # length of the excel file
+        self.length = 10
+        self.xl_file = xlrd.open_workbook('ccf_names&links.xls')
 
         # main window size policy
         MainWindow.setObjectName("MainWindow")
@@ -59,36 +63,36 @@ class UIMainWindow(object):
         self.toolBox = QtWidgets.QToolBox(self.centralwidget)
         self.toolBox.setObjectName("toolBox")
 
-        self.page = QtWidgets.QWidget()
-        self.page.setObjectName("page")
-
-        self.gridLayout_2 = QtWidgets.QGridLayout(self.page)
-        self.gridLayout_2.setObjectName("gridLayout_2")
-
-        self.checkBox_3 = QtWidgets.QCheckBox(self.page)
-        self.checkBox_3.setObjectName("checkBox_3")
-        self.gridLayout_2.addWidget(self.checkBox_3, 0, 0, 1, 1)
-
-        self.checkBox_8 = QtWidgets.QCheckBox(self.page)
-        self.checkBox_8.setObjectName("checkBox_8")
-        self.gridLayout_2.addWidget(self.checkBox_8, 1, 0, 1, 1)
-
-        self.checkBox_9 = QtWidgets.QCheckBox(self.page)
-        self.checkBox_9.setObjectName("checkBox_9")
-        self.gridLayout_2.addWidget(self.checkBox_9, 2, 0, 1, 1)
-
-        self.checkBox_2 = QtWidgets.QCheckBox(self.page)
-        self.checkBox_2.setObjectName("checkBox_2")
-        self.gridLayout_2.addWidget(self.checkBox_2, 3, 0, 1, 1)
-
-        self.page2 = QtWidgets.QWidget()
-        self.page2.setObjectName("page2")
-
-        self.gridLayout_3 = QtWidgets.QGridLayout(self.page2)
-        self.gridLayout_3.setObjectName("gridLayout_3")
-
-        self.checkBox_4 = QtWidgets.QCheckBox(self.page2)
-        self.checkBox_4.setObjectName("checkBox_4")
+        # self.page = QtWidgets.QWidget()
+        # self.page.setObjectName("page")
+        #
+        # self.gridLayout_2 = QtWidgets.QGridLayout(self.page)
+        # self.gridLayout_2.setObjectName("gridLayout_2")
+        #
+        # self.checkBox_3 = QtWidgets.QCheckBox(self.page)
+        # self.checkBox_3.setObjectName("checkBox_3")
+        # self.gridLayout_2.addWidget(self.checkBox_3, 0, 0, 1, 1)
+        #
+        # self.checkBox_8 = QtWidgets.QCheckBox(self.page)
+        # self.checkBox_8.setObjectName("checkBox_8")
+        # self.gridLayout_2.addWidget(self.checkBox_8, 1, 0, 1, 1)
+        #
+        # self.checkBox_9 = QtWidgets.QCheckBox(self.page)
+        # self.checkBox_9.setObjectName("checkBox_9")
+        # self.gridLayout_2.addWidget(self.checkBox_9, 2, 0, 1, 1)
+        #
+        # self.checkBox_2 = QtWidgets.QCheckBox(self.page)
+        # self.checkBox_2.setObjectName("checkBox_2")
+        # self.gridLayout_2.addWidget(self.checkBox_2, 3, 0, 1, 1)
+        #
+        # self.page2 = QtWidgets.QWidget()
+        # self.page2.setObjectName("page2")
+        #
+        # self.gridLayout_3 = QtWidgets.QGridLayout(self.page2)
+        # self.gridLayout_3.setObjectName("gridLayout_3")
+        #
+        # self.checkBox_4 = QtWidgets.QCheckBox(self.page2)
+        # self.checkBox_4.setObjectName("checkBox_4")
 
         # set the layout of Crawl button
         spacer_item1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
@@ -98,21 +102,32 @@ class UIMainWindow(object):
         self.horizontalLayout.addItem(spacer_item2)
         self.gridLayout.addLayout(self.horizontalLayout, 2, 0, 1, 1)
 
-        # page 1 of toolBox
+        # # page 1 of toolBox
         self.toolBox.setCurrentIndex(0)  # default: start at the first page
-        self.page.setGeometry(QtCore.QRect(0, 0, 658, 546))
-        self.toolBox.addItem(self.page, "")
-
-        # page 2 of toolBox
-        self.page2.setGeometry(QtCore.QRect(0, 0, 658, 546))
-        self.gridLayout_3.addWidget(self.checkBox_4, 0, 0, 1, 1)
-        self.toolBox.addItem(self.page2, "")
+        # self.page.setGeometry(QtCore.QRect(0, 0, 658, 546))
+        # self.toolBox.addItem(self.page, "")
+        #
+        # # page 2 of toolBox
+        # self.page2.setGeometry(QtCore.QRect(0, 0, 658, 546))
+        # self.gridLayout_3.addWidget(self.checkBox_4, 0, 0, 1, 1)
+        # self.toolBox.addItem(self.page2, "")
         self.gridLayout.addWidget(self.toolBox, 0, 0, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
 
+        self.set_length()
         self.setup_menu(MainWindow)
+        self.setup_toolbox_tab()
         self.translate_ui(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
+    def set_length(self):
+        try:
+            # xl_file = xlrd.open_workbook('ccf_names&links.xls')
+            table = self.xl_file.sheet_by_index(0)
+            cols = table.ncols
+            self.length = cols / 3
+        except FileNotFoundError:
+            self.length = 10
 
     def setup_menu(self, MainWindow):
         # menubar of the mainwindow
@@ -148,17 +163,61 @@ class UIMainWindow(object):
         self.menubar.addAction(self.menuUpdate.menuAction())
         self.menubar.addAction(self.menuFilter.menuAction())
 
+    def setup_toolbox_tab(self):
+        length = self.length
+        for i in range(int(length)):
+            page = QtWidgets.QWidget()
+            page.setObjectName("page")
+            gridLayout = QtWidgets.QGridLayout(page)
+            gridLayout.setObjectName("gridLayout")
+
+            self.setup_checkbox(i, page)
+            page.setGeometry(QtCore.QRect(0, 0, 658, 546))
+            self.toolBox.addItem(page, "Tab " + str(i))
+
+    def setup_checkbox(self, col_index, tab):
+        # xl_file = xlrd.open_workbook('ccf_names&links.xls')
+        ccf_table = self.xl_file.sheet_by_index(0)
+        start_pos = col_index
+
+        # canvas = Canvas(tab, bg='#FFFFFF', width=300, height=300, scrollregion=(0, 0, 1000, 3000))
+        #
+        # hbar = Scrollbar(tab, orient=HORIZONTAL)
+        # hbar.pack(side=BOTTOM, fill=X)
+        # hbar.config(command=canvas.xview)
+        #
+        # vbar = Scrollbar(tab, orient=VERTICAL)
+        # vbar.pack(side=RIGHT, fill=Y)
+        # vbar.config(command=canvas.yview)
+        #
+        # canvas.config(width=300, height=300)
+        # canvas.config(xscrollcommand=hbar.set, yscrollcommand=vbar.set)
+        # canvas.pack(side=LEFT, expand=True, fill=BOTH)
+        # # canvas.config(xscrollcommand=hsbar.set)
+        # # , yscrollcommand=vsbar.set, xscrollcommand=hsbar.set
+        #
+        # ft = tkinter.font.Font(family='Fixdsys', size=14, weight=tkinter.font.BOLD)
+        # label = Label(canvas, text=ccf_table.cell_value(0, 3 * start_pos), anchor=NW, font=ft)
+        # label.pack(side=TOP, padx=5, pady=5)
+        # row_count = table.col_values(3 * start_pos + 1)
+        # while row_count[-1] == '':
+        #     row_count.pop()
+        # # print(len(row_count))
+        # for i in range(len(row_count)):
+        #     checkbox = Checkbutton(canvas, text=table.cell_value(i, 3 * start_pos + 1), onvalue=1, offvalue=0)
+        #     checkbox.pack(side=TOP, padx=5, pady=5, anchor=W)
+
     def translate_ui(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "CCF Crawler"))
         self.pushButton.setText(_translate("MainWindow", "Crawl"))
-        self.checkBox_3.setText(_translate("MainWindow", "name of conference or transaction1"))
-        self.checkBox_8.setText(_translate("MainWindow", "name of conference or transaction2"))
-        self.checkBox_9.setText(_translate("MainWindow", "name of conference or transaction3"))
-        self.checkBox_2.setText(_translate("MainWindow", "name of conference or transaction4"))
-        self.toolBox.setItemText(self.toolBox.indexOf(self.page), _translate("MainWindow", "name of category1"))
-        self.checkBox_4.setText(_translate("MainWindow", "CheckBox"))
-        self.toolBox.setItemText(self.toolBox.indexOf(self.page2), _translate("MainWindow", "name of category2"))
+        # self.checkBox_3.setText(_translate("MainWindow", "name of conference or transaction1"))
+        # self.checkBox_8.setText(_translate("MainWindow", "name of conference or transaction2"))
+        # self.checkBox_9.setText(_translate("MainWindow", "name of conference or transaction3"))
+        # self.checkBox_2.setText(_translate("MainWindow", "name of conference or transaction4"))
+        # self.toolBox.setItemText(self.toolBox.indexOf(self.page), _translate("MainWindow", "name of category1"))
+        # self.checkBox_4.setText(_translate("MainWindow", "CheckBox"))
+        # self.toolBox.setItemText(self.toolBox.indexOf(self.page2), _translate("MainWindow", "name of category2"))
         self.menuFile.setTitle(_translate("MainWindow", "File"))
         self.menuUpdate.setTitle(_translate("MainWindow", "Update"))
         self.menuFilter.setTitle(_translate("MainWindow", "Filter"))
