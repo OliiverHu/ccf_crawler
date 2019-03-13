@@ -13,8 +13,10 @@ class UIMainWindow(object):
         self.length = 10
         self.xl_file = xlrd.open_workbook('ccf_names&links.xls')
         self.checkbox_list = []
-        self.two_d_checkbox_list = [[None]*6 for col in range(self.length)]
         self.checkbox_link_list = []
+        self.checkbox_type_list = []
+        self.two_d_checkbox_list = [[None]*6 for col in range(self.length)]
+
 
         # main window size policy
         MainWindow.setObjectName("MainWindow")
@@ -314,6 +316,13 @@ class UIMainWindow(object):
                 checkbox.setStyleSheet("font: 10pt")
                 self.checkbox_list.append(checkbox)
                 self.checkbox_link_list.append(ccf_table.cell_value(i-1, 3*start_pos+2))
+                # print(flag)
+                # 0:journal
+                if flag == 2 or flag == 3 or flag == 4:
+                    self.checkbox_type_list.append(0)
+                # 1:conference
+                elif flag == 6 or flag == 7 or flag == 8:
+                    self.checkbox_type_list.append(1)
                 gridLayout2.addWidget(checkbox, i, 0, 1, 1)
         # print(self.checkbox_list)
 

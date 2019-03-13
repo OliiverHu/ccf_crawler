@@ -35,7 +35,7 @@ def crawl_contents_links_from_conference(conference_url, year):
         a_objects = (publ_lists[i].find_all('a', class_='toc-link'))
         for a_object in a_objects:
             links.append(a_object.get('href'))
-    print(links)
+    # print(links)
     return links
 
 
