@@ -15,6 +15,9 @@ class UIMainWindow(object):
         self.checkbox_list = []
         self.checkbox_link_list = []
         self.checkbox_type_list = []
+        self.checkbox_a_list = []
+        self.checkbox_b_list = []
+        self.checkbox_c_list = []
         self.two_d_checkbox_list = [[None]*6 for col in range(self.length)]
 
 
@@ -279,16 +282,19 @@ class UIMainWindow(object):
                     # checkbox.setStyleSheet("font: 15pt")
                     checkbox.setFont(QtGui.QFont("Roman times", 18, QtGui.QFont.Bold))
                     gridLayout2.addWidget(checkbox, i, 0, 1, 1)
+                    self.checkbox_a_list.append(checkbox)
                 elif flag == 3:
                     checkbox = QtWidgets.QCheckBox("B类", tab)
                     checkbox.setObjectName("B")
                     checkbox.setFont(QtGui.QFont("Roman times", 18, QtGui.QFont.Bold))
                     gridLayout2.addWidget(checkbox, i, 0, 1, 1)
+                    self.checkbox_b_list.append(checkbox)
                 elif flag == 4:
                     checkbox = QtWidgets.QCheckBox("C类", tab)
                     checkbox.setObjectName("C")
                     checkbox.setFont(QtGui.QFont("Roman times", 18, QtGui.QFont.Bold))
                     gridLayout2.addWidget(checkbox, i, 0, 1, 1)
+                    self.checkbox_c_list.append(checkbox)
                 elif flag == 5:
                     label = QtWidgets.QLabel()
                     label.setText("会议")
@@ -300,16 +306,19 @@ class UIMainWindow(object):
                     checkbox.setObjectName("A")
                     checkbox.setFont(QtGui.QFont("Roman times", 18, QtGui.QFont.Bold))
                     gridLayout2.addWidget(checkbox, i, 0, 1, 1)
+                    self.checkbox_a_list.append(checkbox)
                 elif flag == 7:
                     checkbox = QtWidgets.QCheckBox("B类", tab)
                     checkbox.setObjectName("B")
                     checkbox.setFont(QtGui.QFont("Roman times", 18, QtGui.QFont.Bold))
                     gridLayout2.addWidget(checkbox, i, 0, 1, 1)
+                    self.checkbox_b_list.append(checkbox)
                 else:
                     checkbox = QtWidgets.QCheckBox("C类", tab)
                     checkbox.setObjectName("C")
                     checkbox.setFont(QtGui.QFont("Roman times", 18, QtGui.QFont.Bold))
                     gridLayout2.addWidget(checkbox, i, 0, 1, 1)
+                    self.checkbox_c_list.append(checkbox)
             else:
                 checkbox = QtWidgets.QCheckBox(ccf_table.cell_value(i-1, 3*start_pos+1), tab)
                 checkbox.setObjectName("checkBox" + str(i-1))
